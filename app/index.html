@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Electron + Angular Material | File System Explorer</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../node_modules/angular-material/angular-material.css"/>
+    <link rel="stylesheet" href="./css/app.css"/>
+
+    <style type="text/css">
+      /**
+         * Hide when Angular is not yet loaded and initialized
+         */
+      [ng\:cloak],
+      [ng-cloak],
+      [data-ng-cloak],
+      [x-ng-cloak],
+      .ng-cloak,
+      .x-ng-cloak {
+        display: none !important;
+      }
+      .active {
+        background-color: #29b6f6;
+      }
+
+    </style>
+
+  </head>
+
+  <body ng-app="fileSystemExplorer" layout="row" ng-controller="FolderController as fs" ng-cloak>
+
+    <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2" md-component-id="left" ng-click="fs.toggleList()" aria-label="Show Menu" md-is-locked-open="$mdMedia('gt-sm')">
+
+      <md-toolbar class="md-whiteframe-z1">
+        <h3>Menu</h3>
+      </md-toolbar>
+    </md-sidenav>
+
+    <div flex layout="column" tabIndex="-1" role="main" class="md-whiteframe-z2">
+
+      <md-toolbar layout="row" class="md-whiteframe-z1">
+        <md-button id="main" class="menu" hide-gt-sm ng-click="fs.toggleList()" aria-label="Show Menu">
+          <md-icon md-font-library="material-icons">menu</md-icon>
+        </md-button>
+        <h3>File System Explorer</h3>
+        <md-button hide-gt-sm ng-click="fs.folderBack()" aria-label="Back">
+          <md-icon md-font-library="material-icons">arrow_back</md-icon>
+        </md-button>
+      </md-toolbar>
+
+      <md-content flex id="content">
+        <span>{{fs.actualPath}}</span>
+        <md-grid-list md-cols="3" md-cols-sm="5" md-cols-md="7" md-cols-gt-md="9" md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter="10px" md-gutter-gt-sm="4px">
+          <md-grid-tile id="{{$index}}" ng-repeat="file in fs.directory track by $index" ng-click="fs.selectFolder(file)" ng-dblclick="fs.navigateFolder(file.path)" ng-class="{active : fs.isSelected(file)}">
+            <div flex="" layout-align="center center" style="text-align: center;" layout="column">
+              <div>
+                <md-icon md-font-library="material-icons" ng-show="file.isDir" ng-style="{'font-size': '48px', 'height': '48px', 'margin-left': '-18px'}">
+                  folder
+                </md-icon>
+                <md-icon md-font-library="material-icons" ng-show="!file.isDir" ng-style="{'font-size': '48px', 'height': '48px', 'margin-left': '-18px'}">
+                  insert_drive_file
+                </md-icon>
+              </div>
+              <div layout="row">
+                {{file.name  | limitTo:10}}
+                <span ng-if="file.name.length>10">...</span>
+                <md-tooltip>
+                  {{file.name}}
+                </md-tooltip>
+              </div>
+            </div>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <!-- <div ng-repeat="item in fs.folder track by $index" ng-click="fs.selectFolder()">
+          {{item}}
+        </div> -->
+      </md-content>
+    </div>
+    <script src="../node_modules/angular/angular.js"></script>
+    <script src="../node_modules/angular-animate/angular-animate.js"></script>
+    <script src="../node_modules/angular-aria/angular-aria.js"></script>
+    <script type="text/javascript" src="../node_modules/angular-material/angular-material.js"></script>
+
+    <script src="./modules/Folder.js"></script>
+    <script src="./controllers/FolderController.js"></script>
+    <script src="./services/FolderService.js"></script>
+    <!-- <script src="./script.js"></script> -->
+    <script type="text/javascript">
+
+      angular.module('fileSystemExplorer', ['ngMaterial', 'folder']).run(function($rootScope) {
+        $rootScope.fsPrevPath = process.env[(process.platform == 'win32')
+            ? 'USERPROFILE'
+            : 'HOME'];
+        $rootScope.fsActualPath = "";
+      }).config(function($mdThemingProvider) {
+        $mdThemingProvider.theme('default').primaryPalette('blue').accentPalette('red');
+      });
+    </script>
+
+  </body>
+</html>
