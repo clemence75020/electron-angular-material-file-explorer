@@ -1,13 +1,21 @@
 {
-  "name": "Electron + Angular Material | File System Explorer",
+  "name": "electron-angular-material-file-explorer",
   "version": "0.0.1",
+  "description": "Electron + Angular Material | File System Explorer",
+  "author": "Jonathan Gastón Löwenstern <jonigl@gmail.com> (http://lowenstern.com.ar/)",
   "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jonigl/electron-angular-material-file-explorer.git"
+  },
   "dependencies": {
     "angular": "^1.4.9",
     "angular-animate": "^1.4.9",
     "angular-aria": "^1.4.9",
+    "angular-messages": "^1.4.9",
     "angular-material": "^1.0.0",
     "electron": "^0.4.1",
     "electron-reload": "^0.2.0"
-  }
+  },
+  "license": "MIT"
 }

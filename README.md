@@ -5,4 +5,12 @@ folders.
 
 ## Screenshot
 
-![screenshot](/screenshot/screenshot.png)
+![screenshot](https://github.com/jonigl/electron-angular-material-file-explorer/raw/master/screenshot/screenshot.png)
+
+##Author
+
+[Jonathan Gastón Löwenstern](http://lowenstern.com.ar/)
+
+##License
+
+This project is licensed under the MIT license. See the [LICENSE](https://github.com/jonigl/electron-angular-material-file-explorer/raw/master/LICENSE) file for more info.
